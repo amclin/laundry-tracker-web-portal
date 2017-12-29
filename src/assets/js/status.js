@@ -61,12 +61,12 @@ var LaundryStatus = window.LaundryStatus || {};
 			machines: LaundryStatus.config.machines.map(function(machine, index) {
 				var state = 'unknown';
 				// Extract the status of the machine
-				var machineState = result.machines.find(function(el) {
+				var status = result.machines.find(function(el) {
 					return el.id === machine.id;
 				});
 
-				state = (machineState) ? 'on' : 'off';
-				if(typeof machineState === 'undefined') {
+				state = (status.state) ? 'on' : 'off';
+				if(typeof status.state === 'undefined') {
 					state = 'unknown';
 				}
 
