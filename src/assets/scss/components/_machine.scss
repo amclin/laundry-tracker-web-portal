@@ -1,0 +1,24 @@
+// Display labels are shown/hidden based on machine state
+@mixin laundry-machine() {
+	// .machine {
+	// 	.label {
+	// 		@include element-invisible;
+	// 	}
+
+	// 	&.on {
+	// 		.label {
+	// 			&.alert {
+	// 				@include element-invisible-off;
+	// 			}
+	// 		}
+	// 	}
+
+	// 	&.off {
+	// 		.label {
+	// 			&.success {
+	// 				@include element-invisible-off;
+	// 			}
+	// 		}
+	// 	}
+	// }
+}
