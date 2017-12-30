@@ -1,6 +1,27 @@
 // Display labels are shown/hidden based on machine state
+$icons-path: '/assets/img/my-icons-collection/svg/';
+$machine-icons: (
+	dryer: '002-washing-machine.svg',
+	washer: '001-dryer.svg'
+);
+$icon-dryer: ;
+
+@mixin machine-icon($machine, $file) {
+	$url: #{$icons-path}#{$file};
+	&.#{$machine} {
+		background-image: url('#{$url}');
+	}
+}
+
 @mixin laundry-machine() {
-	// .machine {
+	.machine {
+		background-position: top right;
+		background-repeat: no-repeat;
+		background-size: 20% 20%;
+
+		@each $machine, $file in $machine-icons {
+			@include machine-icon($machine, $file);
+		}
 	// 	.label {
 	// 		@include element-invisible;
 	// 	}
@@ -20,5 +41,5 @@
 	// 			}
 	// 		}
 	// 	}
-	// }
+	}
 }

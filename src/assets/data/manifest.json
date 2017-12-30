@@ -1,0 +1,8 @@
+{
+  "short_name": "Laundry",
+  "name": "Laundry monitorying service",
+  "start_url": "index.html",
+  "background_color": "#FFFFFF",
+  "theme_color": "#1779ba",
+  "display": "standalone"
+}
