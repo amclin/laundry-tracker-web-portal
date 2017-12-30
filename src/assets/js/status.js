@@ -20,6 +20,9 @@ var LaundryStatus = window.LaundryStatus || {};
 		}
 	};
 
+	/**
+	 * Loads application instance configuration from file
+	 **/
 	function loadConfig() {
 		return $.ajax({
 			url: 'assets/data/config.json',
@@ -29,16 +32,42 @@ var LaundryStatus = window.LaundryStatus || {};
 		});	
 	}
 
+	/**
+	 * Initializes the page
+	 **/
+	function init() {
+		$('title').text(LaundryStatus.config.locationname + ' laundry status');
+		LaundryStatus.refreshButton = $('.button.refresh');
+		disableRefresh();
+	}
+
 	function loadTemplate() {
 		return $.ajax({
 			url: 'assets/templates/machines.html',
 			success: function(result) {
-				LaundryStatus.config.template = Handlebars.compile(result);
+				LaundryStatus.template = Handlebars.compile(result);
 			}
 		});
 	}
 
+	/**
+	 * Disables the refresh button so that people don't click
+	 * multiple times
+	 **/
+	function disableRefresh() {
+		LaundryStatus.refreshButton.addClass('disabled').text('Updating...');
+	}
+
+	/**
+	 * Re-enables the refresh button
+	 **/
+	function enableRefresh() {
+		LaundryStatus.refreshButton.removeClass('disabled').text('Check again');
+	}
+
 	function requestStatus(location) {
+		disableRefresh();
+
 		return $.ajax({
 			method: 'GET',
 			url: LaundryStatus.config.gateway + '/status/' + location,
@@ -80,10 +109,12 @@ var LaundryStatus = window.LaundryStatus || {};
 			})
 		};
 
-		var contents = LaundryStatus.config.template(data);
+		var contents = LaundryStatus.template(data);
 
 		$('.machines').children().remove();
 		$('.machines').append(contents);
+
+		enableRefresh();
 	}
 
 	function formatTime(timestamp) {
@@ -107,6 +138,7 @@ var LaundryStatus = window.LaundryStatus || {};
 	// Initialize
 	$(function() {
 		loadConfig().done(function() {
+			init();
 			events();
 			loadTemplate();
 			requestStatus(LaundryStatus.config.locationid);
