@@ -4,5 +4,16 @@
   "start_url": "index.html",
   "background_color": "#FFFFFF",
   "theme_color": "#1779ba",
-  "display": "standalone"
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/assets/img/my-icons-collection/svg/002-washing-machine.svg",
+      "type": "image/svg",
+      "sizes": "any"
+    },{
+      "src": "/assets/img/my-icons-collection/png/002-washing-machine.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    }
+  ]
 }
