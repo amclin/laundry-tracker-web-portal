@@ -1,12 +1,14 @@
 (function() {
   'use strict';
 
+/****** CACHING *******/
 var filesToCache = [
   'assets/css/app.css',
   'assets/data/config.json',
   'assets/img/my-icons-collection/svg/001-dryer.svg',
   'assets/img/my-icons-collection/svg/002-washing-machine.svg',
   'assets/js/app.js',
+  'assets/js/main.js',
   'assets/templates/machines.html',
   'index.html',
   '404.html',
@@ -53,7 +55,7 @@ var staticCacheName = 'pages-cache-v2';
   });
 
   self.addEventListener('activate', function(event) {
-    console.log('Activating new service worker...');
+    console.log('Activating new cache service worker...');
 
     var cacheWhitelist = [staticCacheName];
 
@@ -70,5 +72,30 @@ var staticCacheName = 'pages-cache-v2';
     );
   });
 
+
+/****** Notifications ******/
+self.addEventListener('push', function(event) {
+  console.log('[Service Worker] Push Received.');
+  console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
+
+  const title = 'Laundry Monitor';
+  const options = {
+    body: event.data.text(),
+    icon: 'assets/img/my-icons-collection/png/002-washing-machine.png',
+    badge: 'assets/img/my-icons-collection/png/002-washing-machine.png'
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', function(event) {
+  console.log('[Service Worker] Notification click Received.');
+
+  event.notification.close();
+
+  event.waitUntil(
+    clients.openWindow('http://localhost:8888/')
+  );
+});
 
 })();

@@ -122,21 +122,21 @@ function initializeUI() {
   });
 }
 
-
 // Register service worker for notifications
 if ('serviceWorker' in navigator && 'PushManager' in window) {
   console.log('Service Worker and Push is supported');
 
-  navigator.serviceWorker.register('service-worker-notifications.js')
+  navigator.serviceWorker.register('service-worker.js')
     .then(function(swReg) {
-      console.log('Service Worker is registered', swReg);
+      console.log('Service Worker registration successful with scope: ',
+      swReg.scope, swReg);
 
       swRegistration = swReg;
 
       initializeUI();
     })
     .catch(function(error) {
-      console.error('Service Worker Error', error);
+      console.log('Service Worker registration failed: ', error);
     });
 } else {
   console.warn('Push messaging is not supported');
