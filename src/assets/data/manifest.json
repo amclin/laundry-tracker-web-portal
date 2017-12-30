@@ -1,7 +1,7 @@
 {
   "short_name": "Laundry",
-  "name": "Laundry monitorying service",
-  "start_url": "index.html",
+  "name": "Laundry Watcher",
+  "start_url": "http://localhost:8888/index.html",
   "background_color": "#FFFFFF",
   "theme_color": "#1779ba",
   "display": "standalone",
@@ -9,7 +9,7 @@
     {
       "src": "/assets/img/my-icons-collection/svg/002-washing-machine.svg",
       "type": "image/svg",
-      "sizes": "any"
+      "sizes": "512x512 192x192 any"
     },{
       "src": "/assets/img/my-icons-collection/png/002-washing-machine.png",
       "type": "image/png",

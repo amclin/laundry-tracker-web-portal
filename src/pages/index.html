@@ -5,6 +5,53 @@
     </div>
   </div>
   <div class="grid-x grid-margin-x machines">
-
+  	<div class="small-12 cell">
+  		<div class="callout primary">
+  			<p>Please wait while your laundry machine info is loaded</p>
+  		</div>
+  	</div>
+  </div>
+  <div class="grid-x grid-margin-x">
+  	<div class="small-12 medium-4 large-3 cell">
+  		<button disabled class="button primary expanded notifications">
+        Enable Push Messaging
+      </button>
+    </div>
+		<div class="small-12 medium-4 large-3 cell">
+  		<button disabled class="button primary expanded refresh">
+        Refresh
+      </button>
+    </div>
+  </div>
+  <div class="grid-x grid-margin-x">
+  	<div class="large-12 cell">
+  		<section class="callout secondary subscription-details js-subscription-details hide">
+			<p>Once you've subscribed your user, you'd send their subscription to your
+			  server to store in a database so that when you want to send a message
+			  you can lookup the subscription and send a message to it.</p>
+			  <p>To simplify things for this code lab copy the following details
+			  into the <a href="https://web-push-codelab.glitch.me//">Push Companion
+			  Site</a> and it'll send a push message for you, using the application
+			  server keys on the site - so make sure they match.</p>
+			  <pre><code class="js-subscription-json"></code></pre>
+  	  </section>
+  	</div>
   </div>
 </div>
+
+<script>
+	// Register service worker for caching
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker-cache.js')
+      .then(function(registration) {
+        console.log('Service Worker registration successful with scope: ',
+        registration.scope);
+      })
+      .catch(function(err) {
+        console.log('Service Worker registration failed: ', err);
+      });
+  }
+</script>
+
+<script src="assets/js/main.js"></script>
+<script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
