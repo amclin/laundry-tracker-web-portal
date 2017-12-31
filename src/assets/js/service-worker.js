@@ -1,6 +1,10 @@
 (function() {
   'use strict';
 
+  const config = {
+    'gateway': 'https://c5x6853pnc.execute-api.us-east-2.amazonaws.com/beta'
+  }
+
 /****** CACHING *******/
 var filesToCache = [
   'assets/css/app.css',
@@ -41,9 +45,16 @@ var staticCacheName = 'pages-cache-v2';
             return caches.match('404.html');
           }
           return caches.open(staticCacheName).then(function(cache) {
-            if (event.request.url.indexOf('test') < 0) {
-              cache.put(event.request.url, response.clone());
+            // Don't cache anything with "test" in the URL
+            if (event.request.url.indexOf('test') >= 0) {
+              return response;
             }
+            // Don't cache any requests to the API gateway
+            if (event.request.url.indexOf(config.gateway) >= 0) {
+              return response;
+            }
+            // Cache everything else
+            cache.put(event.request.url, response.clone());
             return response;
           });
         });
