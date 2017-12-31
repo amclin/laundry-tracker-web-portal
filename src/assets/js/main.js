@@ -39,6 +39,33 @@ function updateBtn() {
   pushButton.disabled = false;
 }
 
+function removeSubscriptionOnServer(subscriptionId) {
+  if(subscriptionId) {
+    $.ajax({
+      method: 'DELETE',
+      url: config.gateway + '/notification/' + encodeURIComponent(subscriptionId),
+      headers: {
+        "x-api-key": config.apikey
+      },
+      success: function() {
+        console.log('removed subscription from server');
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.error('Error requesting status:', textStatus, ', Details: ', errorThrown);
+        console.error('Response: ', jqXHR.responseText);
+      }
+    })
+  }
+
+  const subscriptionJson = document.querySelector('.js-subscription-json');
+  const subscriptionDetails =
+  document.querySelector('.js-subscription-details');
+
+  if (subscription) {
+    subscriptionDetails.classList.add('hide');
+  }
+}
+
 function updateSubscriptionOnServer(subscription) {
 
   if(subscription) {
@@ -64,7 +91,7 @@ function updateSubscriptionOnServer(subscription) {
   // TODO: Remove showing subscription in page
   const subscriptionJson = document.querySelector('.js-subscription-json');
   const subscriptionDetails =
-    document.querySelector('.js-subscription-details');
+  document.querySelector('.js-subscription-details');
 
   if (subscription) {
     subscriptionJson.textContent = JSON.stringify(subscription);
@@ -96,9 +123,11 @@ function subscribeUser() {
 }
 
 function unsubscribeUser() {
+  var subscriptionId = '';
   swRegistration.pushManager.getSubscription()
   .then(function(subscription) {
     if (subscription) {
+      subscriptionId = subscription.endpoint;
       return subscription.unsubscribe();
     }
   })
@@ -106,7 +135,7 @@ function unsubscribeUser() {
     console.log('Error unsubscribing', error);
   })
   .then(function() {
-    updateSubscriptionOnServer(null);
+    removeSubscriptionOnServer(subscriptionId);
 
     console.log('User is unsubscribed.');
     isSubscribed = false;
