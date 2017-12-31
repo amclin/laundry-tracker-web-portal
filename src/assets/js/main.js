@@ -158,6 +158,7 @@ function initializeUI() {
 if ('serviceWorker' in navigator && 'PushManager' in window) {
   console.log('Service Worker and Push is supported');
 
+  // Register the service worker
   navigator.serviceWorker.register('service-worker.js')
     .then(function(swReg) {
       console.log('Service Worker registration successful with scope: ',
@@ -170,6 +171,15 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
     .catch(function(error) {
       console.log('Service Worker registration failed: ', error);
     });
+
+  // Add a listener so the service worker can publish to the page
+  navigator.serviceWorker.addEventListener('message', function(event) {
+    console.log('Received a message from service worker: ', event.data);
+    // Trigger a refresh of the machine display
+    if(event.data.updatedMachines) {
+      $('.button.refresh').click()
+    }
+  });
 } else {
   console.warn('Push messaging is not supported');
   pushButton.textContent = 'Push Not Supported';
