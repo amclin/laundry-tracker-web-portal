@@ -1,8 +1,8 @@
 'use strict';
 
 const applicationServerPublicKey = 'BBUqRw8CqtCgLZ9ve8xPAesZZUdpdWUW775r4RHFPOkeZQj5pyGj1G2EbP3hE4wylQyOCb7wOIhMzRNth3MNchQ';
-
 const pushButton = document.querySelector('.button.notifications');
+const config = require('./config');
 
 let isSubscribed = false;
 let swRegistration = null;
@@ -40,8 +40,28 @@ function updateBtn() {
 }
 
 function updateSubscriptionOnServer(subscription) {
-  // TODO: Send subscription to application server
 
+  if(subscription) {
+    $.ajax({
+      method: 'POST',
+      url: config.gateway + '/notification',
+      headers: {
+        "x-api-key": config.apikey
+      },
+      contentType: 'application/json',
+      data: JSON.stringify(subscription),
+      success: function() {
+        console.log('registered subscription with server');
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.error('Error requesting status:', textStatus, ', Details: ', errorThrown);
+        console.error('Response: ', jqXHR.responseText);
+      }
+    });
+  }
+
+
+  // TODO: Remove showing subscription in page
   const subscriptionJson = document.querySelector('.js-subscription-json');
   const subscriptionDetails =
     document.querySelector('.js-subscription-details');
