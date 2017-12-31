@@ -67,8 +67,12 @@ function removeSubscriptionOnServer(subscriptionId) {
 }
 
 function updateSubscriptionOnServer(subscription) {
-
   if(subscription) {
+    // Add extra data besides subscription JSON
+    var data = subscription.toJSON()
+    data.locationid = config.locationid
+    data = JSON.stringify(data)
+
     $.ajax({
       method: 'POST',
       url: config.gateway + '/notification',
@@ -76,7 +80,7 @@ function updateSubscriptionOnServer(subscription) {
         "x-api-key": config.apikey
       },
       contentType: 'application/json',
-      data: JSON.stringify(subscription),
+      data: data,
       success: function() {
         console.log('registered subscription with server');
       },
@@ -115,6 +119,7 @@ function subscribeUser() {
     isSubscribed = true;
 
     updateBtn();
+
   })
   .catch(function(err) {
     console.log('Failed to subscribe the user: ', err);
@@ -159,10 +164,9 @@ function initializeUI() {
   .then(function(subscription) {
     isSubscribed = !(subscription === null);
 
-    updateSubscriptionOnServer(subscription);
-
     if (isSubscribed) {
       console.log('User IS subscribed.');
+      updateSubscriptionOnServer(subscription);
     } else {
       console.log('User is NOT subscribed.');
     }
