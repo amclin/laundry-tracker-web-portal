@@ -1,6 +1,7 @@
 import jQuery from 'jquery';
 import Handlebars from 'handlebars/dist/handlebars.js';
 
+const config = require('./config.js')
 var LaundryStatus = window.LaundryStatus || {};
 
 (function statusScopeWrapper($) {
@@ -23,22 +24,10 @@ var LaundryStatus = window.LaundryStatus || {};
 	};
 
 	/**
-	 * Loads application instance configuration from file
-	 **/
-	function loadConfig() {
-		return $.ajax({
-			url: 'assets/data/config.json',
-			success: function(result) {
-				LaundryStatus.config = result;
-			}
-		});	
-	}
-
-	/**
 	 * Initializes the page
 	 **/
 	function init() {
-		$('title').text(LaundryStatus.config.locationname + ' laundry status');
+		$('title').text(config.locationname + ' laundry status');
 		disableRefresh();
 	}
 
@@ -71,10 +60,10 @@ var LaundryStatus = window.LaundryStatus || {};
 
 		return $.ajax({
 			method: 'GET',
-			url: LaundryStatus.config.gateway + '/status/' + location,
-			// headers: {
-			// 	"x-api-key": LaundryStatus.config.apikey
-			// },
+			url: config.gateway + '/status/' + location,
+			headers: {
+				"x-api-key": config.apikey
+			},
 			contentType: 'application/json',
 			success: completeRequest,
 			error: function(jqXHR, textStatus, errorThrown) {
@@ -88,7 +77,7 @@ var LaundryStatus = window.LaundryStatus || {};
 
 		var data = {
 			updated: formatTime(result.timestamp),
-			machines: LaundryStatus.config.machines.map(function(machine, index) {
+			machines: config.machines.map(function(machine, index) {
 				var state = 'unknown';
 				// Extract the status of the machine
 				var status = result.machines.find(function(el) {
@@ -132,18 +121,16 @@ var LaundryStatus = window.LaundryStatus || {};
 	 **/
 	function events() {
 		refreshButton.on('click',function() {
-			requestStatus(LaundryStatus.config.locationid);
+			requestStatus(config.locationid);
 		});
 	}
 
 	// Initialize
 	$(function() {
-		loadConfig().done(function() {
-			init();
-			events();
-			loadTemplate();
-			requestStatus(LaundryStatus.config.locationid);
-		});
+		init();
+		events();
+		loadTemplate();
+		requestStatus(config.locationid);
 	});
 
 })(jQuery);

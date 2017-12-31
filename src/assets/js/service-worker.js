@@ -1,25 +1,11 @@
 (function() {
   'use strict';
 
-  const config = {
-    'gateway': 'https://c5x6853pnc.execute-api.us-east-2.amazonaws.com/beta'
-  }
+const config = require('./config.js')
 
 /****** CACHING *******/
-var filesToCache = [
-  'assets/css/app.css',
-  'assets/data/config.json',
-  'assets/img/my-icons-collection/svg/001-dryer.svg',
-  'assets/img/my-icons-collection/svg/002-washing-machine.svg',
-  'assets/js/app.js',
-  'assets/js/main.js',
-  'assets/templates/machines.html',
-  'index.html',
-  '404.html',
-  'offline.html'
-];
-
-var staticCacheName = 'pages-cache-v2';
+const filesToCache = config.serviceworker.cache.filesToCache;
+const staticCacheName = config.serviceworker.cache.staticCacheName;
 
   self.addEventListener('install', function(event) {
     console.log('Attempting to install service worker and cache static assets');
@@ -42,7 +28,7 @@ var staticCacheName = 'pages-cache-v2';
         console.log('Network request for ', event.request.url);
         return fetch(event.request).then(function(response) {
           if (response.status === 404) {
-            return caches.match('404.html');
+            return caches.match(config.serviceworker.cache.pages['404']);
           }
           return caches.open(staticCacheName).then(function(cache) {
             // Don't cache anything with "test" in the URL
@@ -60,7 +46,7 @@ var staticCacheName = 'pages-cache-v2';
         });
       }).catch(function(error) {
         console.log('Error, ', error);
-        return caches.match('offline.html');
+        return caches.match(config.serviceworker.cache.pages.offline);
       })
     );
   });

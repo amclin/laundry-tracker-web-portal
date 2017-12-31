@@ -126,6 +126,9 @@ function javascript() {
 // Special Javascript file that lives in a different location
 function serviceWorker() {
   return gulp.src('src/assets/js/service-worker.js')
+    .pipe(named())
+    .pipe($.sourcemaps.init())
+    .pipe(webpackStream(webpackConfig, webpack2))
     .pipe($.if(PRODUCTION, $.uglify()
       .on('error', e => { console.log(e); })
     ))

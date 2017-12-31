@@ -29,5 +29,26 @@ module.exports = {
       "name": "Right Dryer",
       "type": "dryer"
     }
-  ]
+  ],
+  "serviceworker": {
+    "cache": {
+      "staticCacheName": "pages-cache-v3",
+      "filesToCache": [
+          "/",
+          "assets/css/app.css",
+          "assets/img/my-icons-collection/svg/001-dryer.svg",
+          "assets/img/my-icons-collection/svg/002-washing-machine.svg",
+          "assets/js/app.js",
+          "assets/js/main.js",
+          "assets/templates/machines.html",
+          "index.html",
+          "404.html",
+          "offline.html"
+      ],
+      "pages": {
+        "404": "404.html",
+        "offline": "offline.html"
+      }
+    }
+  }
 };
