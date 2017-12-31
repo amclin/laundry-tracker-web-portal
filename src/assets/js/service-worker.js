@@ -71,10 +71,10 @@ const staticCacheName = config.serviceworker.cache.staticCacheName;
 
 /**
  * Prepares a push notification object
- * @param object event Data from subscription
+ * @param object eventData https://developer.mozilla.org/en-US/docs/Web/API/PushMessageData
  * @return object Formatted notification object with messages
  **/
-function prepareNotfication(event) {
+function prepareNotfication(eventData) {
   const messages = config.serviceworker.notifications.messages
   const icons = config.serviceworker.notifications.icons
   const badges = icons
@@ -89,7 +89,7 @@ function prepareNotfication(event) {
   var data = {}
 
   try {
-    data = JSON.parse(event)
+    data = eventData.json()
   } catch(err) {
     console.warn('Failed to parse push notification:',err)
   }
@@ -103,8 +103,8 @@ function prepareNotfication(event) {
     state = machine.state ? 'on' : 'off'
 
     // Write the correct message
-    message = messages[state]
-    message.replace('%s', machine.name)
+    body = messages[state]
+    body = body.replace(/%s/g, machine.name)
 
     // Select the right images
     badge = icons[machine.type][state]
@@ -126,7 +126,7 @@ self.addEventListener('push', function(event) {
   console.log('[Service Worker] Push Received.')
   console.log(`[Service Worker] Push had this data: "${event.data.text()}"`)
 
-  const notification = prepareNotfication(event)
+  const notification = prepareNotfication(event.data)
 
   event.waitUntil(self.registration.showNotification(notification.title, notification.options));
 });

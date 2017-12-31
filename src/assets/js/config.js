@@ -60,8 +60,8 @@ module.exports = {
       icons: {
         washer: {
           default: 'assets/img/my-icons-collection/png/002-washing-machine.png',
-          inUse: 'assets/img/my-icons-collection/png/002-washing-machine.png',
-          available: 'assets/img/my-icons-collection/png/002-washing-machine.png'
+          on: 'assets/img/my-icons-collection/png/002-washing-machine.png',
+          off: 'assets/img/my-icons-collection/png/002-washing-machine.png'
         },
         dryer: {
           default: 'assets/img/my-icons-collection/png/001-dryer.png',
