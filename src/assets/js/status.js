@@ -5,6 +5,8 @@ var LaundryStatus = window.LaundryStatus || {};
 
 (function statusScopeWrapper($) {
 
+	var refreshButton = $('.button.refresh')
+
 	var statusLabels = {
 		'on' : {
 			message: 'In Use',
@@ -37,7 +39,6 @@ var LaundryStatus = window.LaundryStatus || {};
 	 **/
 	function init() {
 		$('title').text(LaundryStatus.config.locationname + ' laundry status');
-		LaundryStatus.refreshButton = $('.button.refresh');
 		disableRefresh();
 	}
 
@@ -55,14 +56,14 @@ var LaundryStatus = window.LaundryStatus || {};
 	 * multiple times
 	 **/
 	function disableRefresh() {
-		LaundryStatus.refreshButton.addClass('disabled').text('Updating...');
+		refreshButton.addClass('disabled').prop('disabled', true).text('Updating...')
 	}
 
 	/**
 	 * Re-enables the refresh button
 	 **/
 	function enableRefresh() {
-		LaundryStatus.refreshButton.removeClass('disabled').text('Check again');
+		refreshButton.removeClass('disabled').prop('disabled', false).text('Check status')
 	}
 
 	function requestStatus(location) {
@@ -130,7 +131,7 @@ var LaundryStatus = window.LaundryStatus || {};
 	 * Setup events
 	 **/
 	function events() {
-		$(document).on('click','.button.refresh',function() {
+		refreshButton.on('click',function() {
 			requestStatus(LaundryStatus.config.locationid);
 		});
 	}
