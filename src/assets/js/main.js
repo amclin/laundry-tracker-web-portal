@@ -61,7 +61,7 @@ function removeSubscriptionOnServer(subscriptionId) {
   const subscriptionDetails =
   document.querySelector('.js-subscription-details');
 
-  if (subscription) {
+  if (subscriptionId) {
     subscriptionDetails.classList.add('hide');
   }
 }
