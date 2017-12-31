@@ -56,14 +56,6 @@ function removeSubscriptionOnServer(subscriptionId) {
       }
     })
   }
-
-  const subscriptionJson = document.querySelector('.js-subscription-json');
-  const subscriptionDetails =
-  document.querySelector('.js-subscription-details');
-
-  if (subscriptionId) {
-    subscriptionDetails.classList.add('hide');
-  }
 }
 
 function updateSubscriptionOnServer(subscription) {
@@ -89,19 +81,6 @@ function updateSubscriptionOnServer(subscription) {
         console.error('Response: ', jqXHR.responseText);
       }
     });
-  }
-
-
-  // TODO: Remove showing subscription in page
-  const subscriptionJson = document.querySelector('.js-subscription-json');
-  const subscriptionDetails =
-  document.querySelector('.js-subscription-details');
-
-  if (subscription) {
-    subscriptionJson.textContent = JSON.stringify(subscription);
-    subscriptionDetails.classList.remove('hide');
-  } else {
-    subscriptionDetails.classList.add('hide');
   }
 }
 
