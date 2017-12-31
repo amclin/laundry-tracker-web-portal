@@ -49,6 +49,26 @@ module.exports = {
         "404": "404.html",
         "offline": "offline.html"
       }
+    },
+    notifications: {
+      title: 'Laundry Watcher',
+      messages: {
+        on: '%s is in use',
+        off: '%s is available',
+        default: 'A laundry machine is finished or now in use'
+      },
+      icons: {
+        washer: {
+          default: 'assets/img/my-icons-collection/png/002-washing-machine.png',
+          inUse: 'assets/img/my-icons-collection/png/002-washing-machine.png',
+          available: 'assets/img/my-icons-collection/png/002-washing-machine.png'
+        },
+        dryer: {
+          default: 'assets/img/my-icons-collection/png/001-dryer.png',
+          on: 'assets/img/my-icons-collection/png/001-dryer.png',
+          off: 'assets/img/my-icons-collection/png/001-dryer.png'
+        }
+      }
     }
   }
 };

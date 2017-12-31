@@ -69,20 +69,66 @@ const staticCacheName = config.serviceworker.cache.staticCacheName;
     );
   });
 
+/**
+ * Prepares a push notification object
+ * @param object event Data from subscription
+ * @return object Formatted notification object with messages
+ **/
+function prepareNotfication(event) {
+  const messages = config.serviceworker.notifications.messages
+  const icons = config.serviceworker.notifications.icons
+  const badges = icons
+  // Default values
+  var machine = {}
+  var state = 'default'
+  var title = config.serviceworker.notifications.title
+  var body = messages[state]
+  var icon = icons['washer'][state]
+  var badge = badges['washer'][state]
+  // Extract data
+  var data = {}
+
+  try {
+    data = JSON.parse(event)
+  } catch(err) {
+    console.warn('Failed to parse push notification:',err)
+  }
+  
+  if (data.machines) {
+    // Get the data for only the first machine
+    // so we don't spam the user with messages
+    machine = config.machines.find(function(el) {
+      return el.id === data.machines[0].id
+    })
+    state = machine.state ? 'on' : 'off'
+
+    // Write the correct message
+    message = messages[state]
+    message.replace('%s', machine.name)
+
+    // Select the right images
+    badge = icons[machine.type][state]
+    icon = icons[machine.type][state]
+  }
+  
+  return {
+    title: title,
+    options: {
+      body: body,
+      icon: icon,
+      badge: badge
+    }
+  }
+}
 
 /****** Notifications ******/
 self.addEventListener('push', function(event) {
-  console.log('[Service Worker] Push Received.');
-  console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
+  console.log('[Service Worker] Push Received.')
+  console.log(`[Service Worker] Push had this data: "${event.data.text()}"`)
 
-  const title = 'Laundry Monitor';
-  const options = {
-    body: event.data.text(),
-    icon: 'assets/img/my-icons-collection/png/002-washing-machine.png',
-    badge: 'assets/img/my-icons-collection/png/002-washing-machine.png'
-  };
+  const notification = prepareNotfication(event)
 
-  event.waitUntil(self.registration.showNotification(title, options));
+  event.waitUntil(self.registration.showNotification(notification.title, notification.options));
 });
 
 self.addEventListener('notificationclick', function(event) {
