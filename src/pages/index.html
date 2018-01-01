@@ -13,9 +13,21 @@
   </div>
   <div class="grid-x grid-margin-x">
   	<div class="small-12 medium-4 large-3 cell">
-  		<button disabled class="button primary expanded notifications">
-        Enable Push Messaging
-      </button>
+      <div class="grid-x grid-margin-x align-middle">
+        <div class="small-6 cell">
+          <h6>Notifications</h6>
+        </div>
+        <div class="small-6 cell">
+          <div class="switch large">
+            <input class="switch-input" id="enable-notifications" type="checkbox" name="exampleSwitch">
+            <label class="switch-paddle" for="enable-notifications">
+              <span class="show-for-sr">Enable notifications</span>
+              <span class="switch-active" aria-hidden="true">On</span>
+              <span class="switch-inactive" aria-hidden="true">Off</span>
+            </label>
+          </div>
+        </div>
+      </div>
     </div>
 		<div class="small-12 medium-4 large-3 cell">
   		<button disabled class="button primary expanded refresh">

@@ -1,7 +1,7 @@
 'use strict';
 
 const applicationServerPublicKey = 'BBUqRw8CqtCgLZ9ve8xPAesZZUdpdWUW775r4RHFPOkeZQj5pyGj1G2EbP3hE4wylQyOCb7wOIhMzRNth3MNchQ';
-const pushButton = document.querySelector('.button.notifications');
+const pushButton = document.querySelector('#enable-notifications');
 const config = require('./config');
 
 let isSubscribed = false;
@@ -31,9 +31,11 @@ function updateBtn() {
   }
 
   if (isSubscribed) {
-    pushButton.textContent = 'Disable Push Messaging';
+    $(pushButton).prop('checked',true)
+  //   pushButton.textContent = 'Disable Push Messaging';
   } else {
-    pushButton.textContent = 'Enable Push Messaging';
+    $(pushButton).prop('checked',false)
+  //   pushButton.textContent = 'Enable Push Messaging';
   }
 
   pushButton.disabled = false;
@@ -129,8 +131,9 @@ function unsubscribeUser() {
 }
 
 function initializeUI() {
-  pushButton.addEventListener('click', function() {
+  pushButton.addEventListener('change', function() {
     pushButton.disabled = true;
+
     if (isSubscribed) {
       unsubscribeUser();
     } else {
