@@ -94,7 +94,8 @@ var LaundryStatus = window.LaundryStatus || {};
 					name: machine.name,
 					type: machine.type,
 					status: state,
-					label: statusLabels[state]
+					label: statusLabels[state],
+					image: machine.images[state]
 				}
 			})
 		};
@@ -103,6 +104,9 @@ var LaundryStatus = window.LaundryStatus || {};
 
 		$('.machines').children().remove();
 		$('.machines').append(contents);
+
+		// Reinit foundation for replaced contents
+		$(document).foundation();
 
 		enableRefresh();
 	}

@@ -4,42 +4,92 @@ $machine-icons: (
 	dryer: '001-dryer.svg',
 	washer: '002-washing-machine.svg'
 );
-$icon-dryer: ;
 
-@mixin machine-icon($machine, $file) {
+$machine-pill-height: 2rem;
+
+@mixin machine-icon-image($machine, $file) {
 	$url: #{$icons-path}#{$file};
 	&.#{$machine} {
 		background-image: url('#{$url}');
 	}
 }
 
+@mixin machine-icon() {
+	@include border-rounded;
+	background-position: 75% center;
+	background-repeat: no-repeat;
+	background-size: 50%;
+	border-top-right-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+	height: $machine-pill-height;
+
+	@each $machine, $file in $machine-icons {
+		@include machine-icon-image($machine, $file);
+	}
+
+	.off & {
+		background-color: $success-color;
+	}
+
+	.on & {
+		background-color: $alert-color;
+	}
+}
+
+@mixin machine-info() {
+	margin-bottom: $global-margin;
+	padding-left: 2px !important;
+}
+
+@mixin machine-info-header() {
+	@include border-rounded;
+	background-color: $light-gray;
+	border-top-left-radius: 0 !important;
+	border-bottom-left-radius: 0 !important;
+	color: $body-font-color;
+	line-height: $machine-pill-height;
+	height: $machine-pill-height;
+	padding: 0 $global-padding 0 $global-padding/2;
+
+	h5 {
+		line-height: inherit;
+	}
+
+	.expanded & {
+		border-top-right-radius: $machine-pill-height /2 !important;
+		border-bottom-right-radius: 0 !important;
+	}
+}
+
+@mixin machine-info-body() {
+	display: none;
+
+	img {
+		width: 100%;
+	}
+
+	.expanded & {
+		display: block;
+		border-bottom-right-radius: $machine-pill-height /2 !important;
+	}
+}
+
 @mixin laundry-machine() {
 	.machine {
-		background-position: top right;
-		background-repeat: no-repeat;
-		background-size: 20% 20%;
-
-		@each $machine, $file in $machine-icons {
-			@include machine-icon($machine, $file);
+		&-icon {
+			@include machine-icon
 		}
-	// 	.label {
-	// 		@include element-invisible;
-	// 	}
 
-	// 	&.on {
-	// 		.label {
-	// 			&.alert {
-	// 				@include element-invisible-off;
-	// 			}
-	// 		}
-	// 	}
+		&-info {
+			@include machine-info()
 
-	// 	&.off {
-	// 		.label {
-	// 			&.success {
-	// 				@include element-invisible-off;
-	// 			}
-	// 		}
-	// 	}
+			&-header {
+				@include machine-info-header()
+			}
+
+			&-body {
+				@include machine-info-body()
+			}
+		}
 	}
 }

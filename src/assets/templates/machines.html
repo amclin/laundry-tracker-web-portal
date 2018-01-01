@@ -1,11 +1,25 @@
 {{#machines}}
-<div class="large-3 medium-4 small-6 cell">
-	<div class="callout machine {{type}} {{status}}">
-		<span class="label {{label.class}}">{{label.message}}</span>
-		<h5>{{name}}</h5>
-		<ul>
-			<li>Status: <strong>{{status}}</strong></li>
-		</ul>
+<div class="large-4 medium-6 small-12 cell">
+	<div class="machine {{status}} grid-x grid-padding-x">
+		<div class="machine-icon {{type}} small-1 cell"></div>
+		<div class="machine-info small-11 cell"
+			id="machine-{{id}}"
+			data-toggler=".expanded"
+			>
+			<a data-toggle="machine-{{id}}">
+				<div class="machine-info-header">
+					<h5>{{name}}</h5>
+				</div>
+			</a>
+			<div id="info-{{id}}"
+				class="machine-info-body card">
+				<img src='{{image}}' alt="{{name}} {{state}}" />
+				<div class="card-section">
+					<p>Status: <span class="label {{label.class}}">
+					{{label.message}}</span></p>
+					<p>Machine Type: <strong>{{type}}</strong></p>
+				</div>
+			</div>
 	</div>
 </div>
 {{/machines}}
