@@ -62,6 +62,12 @@ module.exports = {
           "assets/css/app.css",
           "assets/img/my-icons-collection/svg/001-dryer.svg",
           "assets/img/my-icons-collection/svg/002-washing-machine.svg",
+          "assets/img/my-icons-collection/png/001-dryer.png",
+          "assets/img/my-icons-collection/png/001-dryer-on.png",
+          "assets/img/my-icons-collection/png/001-dryer-off.png",
+          "assets/img/my-icons-collection/png/002-washing-machine.png",
+          "assets/img/my-icons-collection/png/002-washing-machine-on.png",
+          "assets/img/my-icons-collection/png/002-washing-machine-off.png",
           "assets/js/app.js",
           "assets/js/main.js",
           "assets/templates/machines.html",
@@ -84,13 +90,13 @@ module.exports = {
       icons: {
         washer: {
           default: 'assets/img/my-icons-collection/png/002-washing-machine.png',
-          on: 'assets/img/my-icons-collection/png/002-washing-machine.png',
-          off: 'assets/img/my-icons-collection/png/002-washing-machine.png'
+          on: 'assets/img/my-icons-collection/png/002-washing-machine-on.png',
+          off: 'assets/img/my-icons-collection/png/002-washing-machine-off.png'
         },
         dryer: {
           default: 'assets/img/my-icons-collection/png/001-dryer.png',
-          on: 'assets/img/my-icons-collection/png/001-dryer.png',
-          off: 'assets/img/my-icons-collection/png/001-dryer.png'
+          on: 'assets/img/my-icons-collection/png/001-dryer-on.png',
+          off: 'assets/img/my-icons-collection/png/001-dryer-off.png'
         }
       }
     }
