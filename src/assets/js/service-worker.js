@@ -100,7 +100,9 @@ function prepareNotfication(eventData) {
     machine = config.machines.find(function(el) {
       return el.id === data.machines[0].id
     })
-    state = machine.state ? 'on' : 'off'
+
+    // Use the state supplied from the event data
+    state = data.machines[0].state ? 'on' : 'off'
 
     // Write the correct message
     body = messages[state]
